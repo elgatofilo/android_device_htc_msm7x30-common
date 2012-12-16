@@ -42,6 +42,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.msm7x30
 
+PRODUCT_COPY_FILES += \
+    device/common/gps/gps.conf_US_SUPL:system/etc/gps.conf
+
 # Graphics
 PRODUCT_PACKAGES += \
     copybit.msm7x30 \
