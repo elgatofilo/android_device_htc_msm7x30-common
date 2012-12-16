@@ -38,6 +38,10 @@ PRODUCT_PACKAGES += \
     audio.primary.msm7x30 \
     libaudioutils
 
+# GPS
+PRODUCT_PACKAGES += \
+    gps.msm7x30
+
 # Graphics
 PRODUCT_PACKAGES += \
     copybit.msm7x30 \
