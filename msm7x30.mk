@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011 The CyanogenMod Project
+# Copyright (C) 2012 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+# Permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -50,10 +51,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     audio.a2dp.default \
     audio_policy.msm7x30 \
+    audio_policy.conf \
     audio.primary.msm7x30 \
     libaudioutils
 
-# Video
+# Graphics
 PRODUCT_PACKAGES += \
     copybit.msm7x30 \
     gralloc.msm7x30 \
@@ -61,50 +63,52 @@ PRODUCT_PACKAGES += \
     libgenlock \
     libmemalloc \
     liboverlay \
-    libQcomUI \
+    libqdutils \
     libtilerenderer
 
-# QCOM OMX
+# OMX
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libOmxCore \
-    libmm-omxcore \
     libdivxdrmdecrypt \
+    libI420colorconvert \
+    libmm-omxcore \
+    libOmxCore \
     libOmxVdec \
-    libOmxVenc
+    libOmxVenc \
+    libstagefrighthw
 
-# Misc
+# Torch
 PRODUCT_PACKAGES += \
-    com.android.future.usb.accessory \
     Torch
 
-# Live Wallpapers
+# USB
 PRODUCT_PACKAGES += \
-    LiveWallpapers \
-    LiveWallpapersPicker \
-    VisualizationWallpapers \
-    librs_jni
+    com.android.future.usb.accessory
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
     setup_fs
 
-# for bugmailer
-ifneq ($(TARGET_BUILD_VARIANT),user)
-    PRODUCT_PACKAGES += send_bug
-    PRODUCT_COPY_FILES += \
-        system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
-        system/extras/bugmailer/send_bug:system/bin/send_bug
-endif
-
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
-
-# use high-density artwork where available
-PRODUCT_LOCALES += hdpi
-
+# Device uses high-density artwork where available
 PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+# Hardware properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    com.qc.hardware=true \
+    debug.composition.type=dyn \
+    debug.egl.hw=1 \
+    debug.enabletr=true \
+    debug.mdpcomp.maxlayer=0 \
+    debug.mdpcomp.logs=0 \
+    debug.sf.hw=1 \
+    dev.pm.dyn_samplingrate=1 \
+    ro.opengles.version=131072 \
+    wifi.interface=wlan0
+
+# Misc properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.setupwizard.enable_bypass=1 \
+    dalvik.vm.lockprof.threshold=500 \
+    ro.com.google.locationfeatures=1 \
+    dalvik.vm.dexopt-flags=m=y
