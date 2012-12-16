@@ -1,4 +1,4 @@
-# Copyright (C) 2011 The CyanogenMod Project
+# Copyright (C) 2012 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,76 +12,63 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
--include device/htc/msm7x30-common/BoardConfigCommon.mk
+BOARD_VENDOR := htc
 
-# inherit from common msm7x30 Recovery
--include device/htc/7x30-recovery/BoardConfigCommon.mk
+TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x30-common/include
 
 TARGET_NO_BOOTLOADER := true
 
+# Kernel
+TARGET_KERNEL_SOURCE := kernel/htc/msm7x30
+
+# Platform
 TARGET_BOARD_PLATFORM := msm7x30
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
+# Architecture
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 ARCH_ARM_HAVE_TLS_REGISTER := true
 
-TARGET_GLOBAL_CFLAGS += -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
+# Flags
+COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 
-TARGET_SPECIFIC_HEADER_PATH := device/htc/msm7x30-common/include
+# QCOM hardware
+BOARD_USES_QCOM_HARDWARE := true
 
-# Wifi related defines
-BOARD_WPA_SUPPLICANT_DRIVER      := WEXT
-WPA_SUPPLICANT_VERSION           := VER_0_8_X
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-BOARD_WLAN_DEVICE                := bcm4329
-WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcm4329/parameters/firmware_path"
-WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/bcm4329.ko"
-WIFI_DRIVER_FW_PATH_STA          := "/vendor/firmware/fw_bcm4329.bin"
-WIFI_DRIVER_FW_PATH_AP           := "/vendor/firmware/fw_bcm4329_apsta.bin"
-WIFI_DRIVER_MODULE_NAME          := "bcm4329"
-WIFI_DRIVER_MODULE_ARG           := "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/proc/calibration iface_name=wlan"
-BOARD_WLAN_DEVICE_REV            := bcm4329
-WIFI_BAND                        := 802_11_ABG
-
-BOARD_USES_ADRENO_200 := true
-
-COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60 -DQCOM_HARDWARE
-USE_OPENGL_RENDERER := true
-TARGET_USES_C2D_COMPOSITION := false
-TARGET_USES_SF_BYPASS := false
-TARGET_HAVE_BYPASS := false
-TARGET_USES_OVERLAY := true
-TARGET_QCOM_HDMI_OUT := true
-TARGET_GRALLOC_USES_ASHMEM := false
-TARGET_USES_GENLOCK := true
-
-TARGET_FORCE_CPU_UPLOAD := true
-
-BOARD_PREBUILT_LIBAUDIO := false
+# Audio
 BOARD_USES_QCOM_AUDIO_VOIPMUTE := true
 BOARD_USES_QCOM_AUDIO_RESETALL := true
 
+# Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_HAVE_BLUETOOTH_BCM := true
 
-BOARD_VENDOR_QCOM_AMSS_VERSION := 1200
+# Camera
+COMMON_GLOBAL_CFLAGS += -DICS_CAMERA_BLOB
+BOARD_NEEDS_MEMORYHEAPPMEM := true
+TARGET_DISABLE_ARM_PIE := true
 
-BOARD_EGL_CFG := device/htc/msm7x30-common/egl.cfg
+# FM Radio
+BOARD_HAVE_QCOM_FM := true
+COMMON_GLOBAL_CFLAGS += -DQCOM_FM_ENABLED
 
-BOARD_USES_QCOM_HARDWARE := true
-BOARD_USES_QCOM_LIBS := true
-BOARD_USES_QCOM_LIBRPC := true
+# GPS
 BOARD_USES_QCOM_GPS := true
-BOARD_USE_QCOM_PMEM := true
+BOARD_VENDOR_QCOM_AMSS_VERSION := 1200
+BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
-#BOARD_CAMERA_USE_GETBUFFERINFO := true
+# Graphics
+COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
+USE_OPENGL_RENDERER := true
+TARGET_NO_HW_VSYNC := true
+BOARD_EGL_CFG := device/htc/msm7x30/configs/egl.cfg
 
-#BOARD_OVERLAY_FORMAT_YCbCr_420_SP := true
+# Lights
+TARGET_PROVIDES_LIBLIGHTS := true
 
-BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 1240
+# RIL
+BOARD_USES_LEGACY_RIL := true
 
-BOARD_HAVE_FM_RADIO := true
-BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
+# Webkit
+TARGET_FORCE_CPU_UPLOAD := true
