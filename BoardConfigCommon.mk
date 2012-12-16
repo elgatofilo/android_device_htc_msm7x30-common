@@ -62,7 +62,7 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
 USE_OPENGL_RENDERER := true
 TARGET_NO_HW_VSYNC := true
-BOARD_EGL_CFG := device/htc/msm7x30/configs/egl.cfg
+BOARD_EGL_CFG := device/htc/msm7x30-common/configs/egl.cfg
 
 # Lights
 TARGET_PROVIDES_LIBLIGHTS := true
